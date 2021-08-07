@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useQuery } from '@apollo/client';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Transition } from 'semantic-ui-react';
 
 import { FETCH_POSTS_QUERY } from '../graphql/queries';
 import { AuthContext } from '../context/auth';
@@ -23,10 +23,14 @@ const HomeScreen = () => {
           </Grid.Row>
         )}
 
-        <Grid.Row>
-          {data.getPosts &&
-            data.getPosts.map((post) => <PostItem key={post.id} post={post} />)}
-        </Grid.Row>
+        <Transition.Group>
+          <Grid.Row>
+            {data.getPosts &&
+              data.getPosts.map((post) => (
+                <PostItem key={post.id} post={post} />
+              ))}
+          </Grid.Row>
+        </Transition.Group>
       </Grid.Column>
     </Grid>
   );

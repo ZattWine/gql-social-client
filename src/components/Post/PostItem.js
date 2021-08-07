@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Image, Button, Icon, Label } from 'semantic-ui-react';
 import moment from 'moment';
+
+import { AuthContext } from '../../context/auth';
+import ReactionButton from '../ReactionButton';
 
 const PostItem = ({
   post: {
     id,
     username,
     body,
+    user: userId,
     commentCount,
     reactionCount,
     reactions,
     createdAt,
   },
 }) => {
+  const { user } = useContext(AuthContext);
+
   const reactionToPost = () => {};
 
   const commentOnPost = () => {};
@@ -33,16 +39,12 @@ const PostItem = ({
         <Card.Description>{body}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button as='div' labelPosition='right'>
-          <Button color='teal' basic onClick={reactionToPost}>
-            <Icon name='heart' />
-          </Button>
-          <Label as='a' basic color='teal' pointing='left'>
-            {reactionCount}
-          </Label>
-        </Button>
+        <ReactionButton
+          post={{ id, reactions, reactionCount }}
+          onReactToPostPress={reactionToPost}
+        />
 
-        <Button as='div' labelPosition='right' onClick={commentOnPost}>
+        <Button labelPosition='right' onClick={commentOnPost}>
           <Button color='blue' basic>
             <Icon name='comments' />
           </Button>
@@ -50,6 +52,17 @@ const PostItem = ({
             {commentCount}
           </Label>
         </Button>
+
+        {user && user.id.toString() === userId.toString() && (
+          <Button
+            as='div'
+            color='red'
+            floated='right'
+            onClick={() => console.log('delete post')}
+          >
+            <Icon name='trash' style={{ margin: 0 }} />
+          </Button>
+        )}
       </Card.Content>
     </Card>
   );

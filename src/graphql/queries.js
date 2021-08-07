@@ -8,13 +8,16 @@ const FETCH_POSTS_QUERY = gql`
       body
       reactionCount
       commentCount
+      user
       createdAt
       reactions {
         username
+        user
       }
       comments {
         id
         username
+        user
         body
         createdAt
       }

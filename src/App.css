@@ -11,3 +11,8 @@
 .ui.grid > .row > .column {
   padding-left: 1rem;
 }
+
+.ui.teal.button:focus,
+.ui.teal.buttons .button:focus {
+  background-color: #00b5ad;
+}
