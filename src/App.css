@@ -1,14 +1,13 @@
-.page-title {
-  font-size: 2rem;
-  margin-top: 10px;
-  margin-left: 10px;
-}
-
-.post-card {
-  margin-bottom: 10px;
-}
-
 .form-container {
   width: 40%;
   margin: 0 auto;
+}
+
+.new-post-container {
+  margin-bottom: 20px;
+}
+
+.ui.grid > .column:not(.row),
+.ui.grid > .row > .column {
+  padding-left: 1rem;
 }
