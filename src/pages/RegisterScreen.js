@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { gql, useMutation } from '@apollo/client';
 
 import { useForm } from '../hooks/form';
+import { AuthContext } from '../context/auth';
 
 const RegisterScreen = ({ history }) => {
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
   const { handleInputChange, handleSubmit, values } = useForm(
     {
@@ -17,7 +19,10 @@ const RegisterScreen = ({ history }) => {
   );
 
   const [createUser, { loading }] = useMutation(REGISTER_USER, {
-    update: (_, result) => history.push('/'),
+    update: (_, { data: { register: userData } }) => {
+      context.login(userData);
+      history.push('/');
+    },
     onError: (err) => setErrors(err.graphQLErrors),
     variables: values,
   });
@@ -28,7 +33,7 @@ const RegisterScreen = ({ history }) => {
 
   return (
     <div className='form-container'>
-      <h1>Register</h1>
+      <h1>Join Us</h1>
 
       {Object.keys(errors).length > 0 && (
         <div className='ui error message'>
@@ -96,8 +101,8 @@ const RegisterScreen = ({ history }) => {
         {/* <Form.Field>
           <Checkbox label='I agree to the Terms and Conditions' />
         </Form.Field> */}
-        <Button type='submit' primary>
-          Submit
+        <Button type='submit' primary fluid>
+          Join
         </Button>
       </Form>
     </div>

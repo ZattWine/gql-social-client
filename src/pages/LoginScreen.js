@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import { gql, useMutation } from '@apollo/client';
 
 import { useForm } from '../hooks/form';
+import { AuthContext } from '../context/auth';
 
 const LoginScreen = ({ history }) => {
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
   const { handleInputChange, handleSubmit, values } = useForm(
@@ -16,7 +18,10 @@ const LoginScreen = ({ history }) => {
   );
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-    update: (_, result) => history.push('/'),
+    update: (_, { data: { login: userData } }) => {
+      context.login(userData);
+      history.push('/');
+    },
     onError: (err) => setErrors(err.graphQLErrors),
     variables: values,
   });
@@ -68,7 +73,7 @@ const LoginScreen = ({ history }) => {
           />
         </Form.Field>
 
-        <Button type='submit' primary>
+        <Button type='submit' primary fluid>
           Login
         </Button>
       </Form>

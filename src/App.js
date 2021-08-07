@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
+import { AuthProvider } from './context/auth';
+import AuthRoute from './routes/authRoutes';
 import Header from './components/Header';
 import HomeScreen from './pages/HomeScreen';
 import RegisterScreen from './pages/RegisterScreen';
@@ -12,14 +14,16 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
-      <Container>
+    <AuthProvider>
+      <Router>
         <Header />
-        <Route exact path='/' component={HomeScreen} />
-        <Route exact path='/register' component={RegisterScreen} />
-        <Route exact path='/login' component={LoginScreen} />
-      </Container>
-    </Router>
+        <Container>
+          <Route exact path='/' component={HomeScreen} />
+          <AuthRoute exact path='/register' component={RegisterScreen} />
+          <AuthRoute exact path='/login' component={LoginScreen} />
+        </Container>
+      </Router>
+    </AuthProvider>
   );
 }
 
