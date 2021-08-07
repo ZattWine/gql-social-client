@@ -11,6 +11,7 @@ const FETCH_POSTS_QUERY = gql`
       username
       body
       reactionCount
+      commentCount
       createdAt
       reactions {
         username
@@ -33,14 +34,14 @@ const HomeScreen = () => {
 
   return (
     <Grid columns={3}>
-      <Grid.Row>
+      <Grid.Row className='page-title'>
         <h1>Recent Posts</h1>
       </Grid.Row>
 
       <Grid.Row>
         {data.getPosts &&
           data.getPosts.map((post) => (
-            <Grid.Column key={post.id}>
+            <Grid.Column key={post.id} style={{ marginBottom: 10 }}>
               <PostItem post={post} />
             </Grid.Column>
           ))}
