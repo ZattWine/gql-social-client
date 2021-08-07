@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Image, Button, Icon, Label } from 'semantic-ui-react';
+import { Card, Image, Button, Icon, Label, Popup } from 'semantic-ui-react';
 import moment from 'moment';
 
 import { AuthContext } from '../../context/auth';
@@ -21,10 +21,6 @@ const PostItem = ({
 }) => {
   const { user } = useContext(AuthContext);
 
-  const reactionToPost = () => {};
-
-  const commentOnPost = () => {};
-
   return (
     <Card fluid>
       <Card.Content>
@@ -40,19 +36,22 @@ const PostItem = ({
         <Card.Description>{body}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <ReactionButton
-          post={{ id, reactions, reactionCount }}
-          onReactToPostPress={reactionToPost}
-        />
+        <ReactionButton post={{ id, reactions, reactionCount }} />
 
-        <Button as='div' labelPosition='right' onClick={commentOnPost}>
-          <Button color='blue' basic>
-            <Icon name='comments' />
-          </Button>
-          <Label as='a' basic color='blue' pointing='left'>
-            {commentCount}
-          </Label>
-        </Button>
+        <Popup
+          content='Comments on post'
+          inverted
+          trigger={
+            <Button as='div' labelPosition='right'>
+              <Button color='blue' basic>
+                <Icon name='comments' />
+              </Button>
+              <Label as='a' basic color='blue' pointing='left'>
+                {commentCount}
+              </Label>
+            </Button>
+          }
+        />
 
         {user && user.id.toString() === userId.toString() && (
           <DeleteButton postId={id} />
