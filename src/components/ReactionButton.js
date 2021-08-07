@@ -24,6 +24,7 @@ const ReactionButton = ({ post: { id, reactions, reactionCount } }) => {
 
   const [reactionToPost] = useMutation(REACTION_TO_POST, {
     variables: { postId: id },
+    onError: (error) => console.log(error),
   });
 
   const reactionButton = user ? (

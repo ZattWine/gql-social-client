@@ -9,7 +9,9 @@ import NewPostForm from '../components/Post/NewPostForm';
 
 const HomeScreen = () => {
   const { user } = useContext(AuthContext);
-  const { loading, error, data } = useQuery(FETCH_POSTS_QUERY);
+  const { loading, error, data } = useQuery(FETCH_POSTS_QUERY, {
+    onError: (error) => console.log(error),
+  });
 
   if (loading) return <h1>Loading posts...</h1>;
   if (error) return <p>{error}</p>;

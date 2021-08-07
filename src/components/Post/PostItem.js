@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { AuthContext } from '../../context/auth';
 import ReactionButton from '../ReactionButton';
+import DeleteButton from '../DeleteButton';
 
 const PostItem = ({
   post: {
@@ -44,7 +45,7 @@ const PostItem = ({
           onReactToPostPress={reactionToPost}
         />
 
-        <Button labelPosition='right' onClick={commentOnPost}>
+        <Button as='div' labelPosition='right' onClick={commentOnPost}>
           <Button color='blue' basic>
             <Icon name='comments' />
           </Button>
@@ -54,14 +55,7 @@ const PostItem = ({
         </Button>
 
         {user && user.id.toString() === userId.toString() && (
-          <Button
-            as='div'
-            color='red'
-            floated='right'
-            onClick={() => console.log('delete post')}
-          >
-            <Icon name='trash' style={{ margin: 0 }} />
-          </Button>
+          <DeleteButton postId={id} />
         )}
       </Card.Content>
     </Card>
