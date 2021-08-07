@@ -7,3 +7,8 @@
 .post-card {
   margin-bottom: 10px;
 }
+
+.form-container {
+  width: 40%;
+  margin: 0 auto;
+}
